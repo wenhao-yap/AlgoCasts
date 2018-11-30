@@ -12,6 +12,23 @@
 //   4
 //   buzz
 
-function fizzBuzz(n) {}
+function fizzBuzz(n) {
+  let num = [...Array(n+1).keys()];
+  num.shift();
+  let answer = num.map((x)=>{
+    if(x%3==0 && x%5==0){
+      return "fizzbuzz";
+    } else if(x%3==0){
+      return "fizz";
+    } else if(x%5==0){
+      return "buzz";
+    } else {
+      return x;
+    }
+  })
+  answer.forEach((x)=>{
+    console.log(x);
+  })
+}
 
 module.exports = fizzBuzz;
