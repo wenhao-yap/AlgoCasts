@@ -26,10 +26,15 @@
 // }
 
 /*---------------------------------------
- * Solution 3
+ * Solution 3 using reduce
 -----------------------------------------*/
 function reverse(str) {
-  return str;
+  return str.split('').reduce((rev,char)=>{
+    debugger
+    return char+rev;
+  },'');
 }
+
+reverse('shopping');
 
 module.exports = reverse;
