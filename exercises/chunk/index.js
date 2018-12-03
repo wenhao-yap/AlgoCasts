@@ -29,14 +29,10 @@
  * Solution 2 using slice
 -----------------------------------------*/
 function chunk(array, size) {
-  let output = []; 
-
-  let prevIdx = 0;
-  for(let i = 0; i<array.length; i+=size){
-    if(i!=0){
-      output.push(array.slice(prevIdx,i));
-    }
-    prevIdx = i;
+  let output = []; let i = 0;
+  while(i<array.length){
+    output.push(array.slice(i,i+size));
+    i+=size;
   }
   return output;
 }
