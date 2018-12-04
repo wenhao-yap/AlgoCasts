@@ -16,24 +16,41 @@
 //     [10,  9,  8, 7]]
 
 function matrix(n) {
-  let results = [[1, 2],[4, 3]];
-  // const inner = new Array(n);
-  // for(let i=0;i<n;i++){
-  //   results.push(inner);
-  // }
+  let results = [];
+  let counter = 0;
 
-  let counter = 1;
-  console.log(results[0][0]);
-  //first row
-  // for(let col=0;col<results[0].length;col++){
-  //   console.log('test');
-  //   results[0][col] = counter;
-  //   // counter++;
-  // }
+  for(let row=0; row<n;row++){
+    results.push(new Array(n).fill(0));
+  }
+
+  results = results.map((row,i)=>{
+    //first row
+    if(i===0){
+      return row.map(col=>{
+        counter++;
+        return counter;
+      })
+    }
+
+    //last column of each row
+    if(i>0){
+      counter++;
+      row[n-1] = counter;
+    }
+
+    //check last row
+    if(i===row.length-1 && row[n-1]!=0){
+      for(let j=row.length-2; j>=0;j--){
+        counter++;
+        row[j] = counter;       
+      }
+    }
+    return row;
+  })
 
   return results;
 }
 
-console.log(matrix(2));
+console.log(matrix(3));
 
 module.exports = matrix;
