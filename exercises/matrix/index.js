@@ -16,41 +16,65 @@
 //     [10,  9,  8, 7]]
 
 function matrix(n) {
-  let results = [];
-  let counter = 0;
-
-  for(let row=0; row<n;row++){
-    results.push(new Array(n).fill(0));
+  let answer = {
+    matrix:[],
+    counter:0
   }
 
-  results = results.map((row,i)=>{
-    //first row
-    if(i===0){
+  for(let row=0; row<n;row++){
+    answer.matrix.push(new Array(n).fill(0));
+  }
+
+  const noOfIterations = Math.ceil(n/2);
+
+  for(let i=0;i<noOfIterations;i++){
+    answer = fillExternal(answer.counter,answer.matrix,i,n-1-i,answer.matrix.length-1-i,i);
+  }
+
+  console.log(answer.matrix);
+
+  return answer.matrix;
+}
+
+function fillExternal(counter,matrix,border_T,border_R,border_B,border_L){
+  //fill in border top,border right,border bottom
+  matrix = matrix.map((row,i)=>{
+    //border top
+    if(i===border_T){
       return row.map(col=>{
-        counter++;
-        return counter;
+        if(col==0){
+          counter++;
+          return counter;          
+        }
+        return col;
       })
     }
 
-    //last column of each row
-    if(i>0){
+    //border right
+    if(i>0 && row[border_R]==0){
       counter++;
-      row[n-1] = counter;
+      row[border_R] = counter;
     }
 
-    //check last row
-    if(i===row.length-1 && row[n-1]!=0){
-      for(let j=row.length-2; j>=0;j--){
+    //border bottom
+    if(i===border_B && row[border_R]!=0){
+      //border_B-1 as the last row is already filled
+      for(let j=border_B-1; j>=border_T;j--){
         counter++;
         row[j] = counter;       
       }
     }
     return row;
   })
-
-  return results;
+  
+  //fill in border left
+  for(let i=matrix.length-1;i>=0;i--){
+    if(matrix[i][border_L] === 0){
+      counter++;
+      matrix[i][border_L] = counter;
+    }
+  }
+  return {matrix,counter};
 }
-
-console.log(matrix(3));
 
 module.exports = matrix;
