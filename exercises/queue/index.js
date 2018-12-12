@@ -8,6 +8,7 @@
 //     q.add(1);
 //     q.remove(); // returns 1;
 
+//first in first out(FIFO)
 class Queue {
   constructor(){
     this.arr = [];
