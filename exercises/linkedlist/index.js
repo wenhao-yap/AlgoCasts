@@ -76,13 +76,77 @@ class LinkedList {
   }
 
   insertLast(data){
-    let last = this.getLast();
+    const last = this.getLast();
     if(last){
       //if there are existing nodes
       last.next = new Node(data);
     } else {
       //if the last node is empty
-      last = new Node(data);
+      this.head = new Node(data);
+    }
+  }
+
+  getAt(idx){
+    let counter = 0;
+    let node = this.head;
+    while(node){
+      if(counter===idx){
+        return node;
+      }
+      node = node.next; 
+      counter++;    
+    }
+    return null;
+  }
+
+  removeAt(idx){
+    if(!this.head){
+      return;
+    }
+    if(idx===0){
+      this.head=this.head.next;
+      return;
+    }
+    let prev = this.getAt(idx-1);
+    if(prev && prev.next){
+      prev.next = prev.next.next;
+    }
+    return;
+  }
+
+  insertAt(data,idx){
+    if(!this.head){
+      this.head = new Node(data);
+      return;
+    }
+    if(idx === 0){
+      this.head = new Node(data,this.head);
+      return;
+    }
+
+    const prev = this.getAt(idx-1) || this.getLast();
+    const node = new Node(data,prev.next);
+    prev.next = node;
+  }
+
+  /**
+   * @param fn: function being passed in  
+   */
+  forEach(fn){
+    let node = this.head;
+    let idx = 0;
+    while(node){
+      fn(node,idx);
+      node=node.next;
+      idx++;
+    }
+  }
+
+  *[Symbol.iterator]() {
+    let node = this.head;
+    while (node) {
+      yield node;
+      node = node.next;
     }
   }
 }
