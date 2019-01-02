@@ -35,9 +35,9 @@ class Tree {
   traverseBF(fn){
     const arr = [this.root];
     while(arr.length){
-      const node = arr.shift();
-      arr.push(...node.children); //take every element out of this array and push it
-      fn(node); //call the current node that we are looking at
+      const node = arr.shift(); //remove the first node in the array
+      arr.push(...node.children); //push all the node children(s) into the array
+      fn(node); //call the function on the removed node
     }
   }
 
@@ -45,6 +45,7 @@ class Tree {
     const arr = [this.root];
     while(arr.length){
       const node = arr.shift();
+      //add current node children at the front so that it will be checked before the other nodes of same level
       arr.unshift(...node.children);
       fn(node);
     }
